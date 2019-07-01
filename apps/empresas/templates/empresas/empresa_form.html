@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="jumbotron">
+
+    {%if form.instance.pk %}
+    <h1>Atualização de Cadastro </h1>
+    <h2>{{form.instance.razao_social}}</h2>
+    {% else %}
+    <h1>Cadastro de Empresa</h1>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+      <button class="btn btn-lg btn-primary" type="submit" value="Save">Salvar</button>
+    </form>
+
+</div>
+{% endblock %}

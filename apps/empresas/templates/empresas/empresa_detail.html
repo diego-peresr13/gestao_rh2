@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block main %}
+     <div class="jumbotron">
+         <h1>Empresa : {{ empresa_detail.razao_social }}</h1>
+         <p>CNPJ : {{ empresa_detail.cnpj }} </p>
+         <p>Endereço: {{empresa_detail.endereco}}</p>
+         <p>Bairro: {{empresa_detail.bairro}}</p>
+         <p>Cidade: {{empresa_detail.cidade}}</p>
+     </div>
+      <a class="btn btn-primary" href="{% url 'empresas:update' empresa_detail.slug %}">Editar</a>
+      <a class="btn btn-warning" href="{% url 'empresas:delete' empresa_detail.slug %}">Deletar</a>
+{% endblock %}
