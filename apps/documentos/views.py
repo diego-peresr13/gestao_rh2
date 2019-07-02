@@ -15,11 +15,13 @@ class DocumentoDetailView(LoginRequiredMixin, DetailView):
 class DocumentoCreateView(LoginRequiredMixin, CreateView):
     model = models.Documento
     fields = ['descricao',
+              'arquivo',
               'funcionario']
 
 class DocumentoUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Documento
     fields = ['descricao',
+              'arquivo',
               'funcionario']
 
 class DocumentoDeleteView(LoginRequiredMixin, DeleteView):

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+     <div class="jumbotron">
+         <h1>Funcionario: {{ funcionario_detail.nome }}</h1>
+         <h1>Empresa : {{ funcionario_detail.empresa }} </h1>
+         <h2>Departamento : {{ funcionario_detail.departamento }}</h2>
+     </div>
+      <a class="btn btn-primary" href="{% url 'funcionarios:update' funcionario_detail.pk %}">Editar</a>
+      <a class="btn btn-warning" href="{% url 'funcionarios:delete' funcionario_detail.pk %}">Deletar</a>
+{% endblock %}

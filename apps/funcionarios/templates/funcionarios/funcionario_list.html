@@ -1,0 +1,13 @@
+{% extends 'base.html '%}
+
+{% block main %}
+
+<div class="jumbotron">
+    <h1>Lista de Funcionarios: </h1>
+<ol>
+    {% for funcionario in funcionarios %}
+       <a href="{{ funcionario.pk }}"><h2><li>{{ funcionario.nome }}</li></h2></a>
+    {% endfor %}
+</ol>
+</div>
+{% endblock %}
