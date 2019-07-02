@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main %}
+     <div class="jumbotron">
+         <h1>Funcionario : {{ documento_detail.funcionario }} </h1>
+         <h2>Documento : {{ documento_detail.descricao }}</h2>
+     </div>
+      <a class="btn btn-primary" href="{% url 'documentos:update' documento_detail.pk %}">Editar</a>
+      <a class="btn btn-warning" href="{% url 'documentos:delete' documento_detail.pk %}">Deletar</a>
+{% endblock %}

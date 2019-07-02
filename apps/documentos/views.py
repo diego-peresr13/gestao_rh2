@@ -1,3 +1,27 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from . import models
 
-# Create your views here.
+class DocumentoListView(LoginRequiredMixin, ListView):
+    context_object_name = 'documentos'
+    model = models.Documento
+
+class DocumentoDetailView(LoginRequiredMixin, DetailView):
+    context_object_name = 'documento_detail'
+    model = models.Documento
+
+class DocumentoCreateView(LoginRequiredMixin, CreateView):
+    model = models.Documento
+    fields = ['descricao',
+              'funcionario']
+
+class DocumentoUpdateView(LoginRequiredMixin, UpdateView):
+    model = models.Documento
+    fields = ['descricao',
+              'funcionario']
+
+class DocumentoDeleteView(LoginRequiredMixin, DeleteView):
+    model = models.Documento
+    success_url = reverse_lazy('documentos:list')

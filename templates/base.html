@@ -30,17 +30,22 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Funcionarios
+          Departamentos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Cadastrar</a>
-          <a class="dropdown-item" href="#">Listar</a>
-          <a class="dropdown-item" href="#">Atualizar</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="{% url 'departamentos:create' %}">Cadastrar</a>
+          <a class="dropdown-item" href="{% url 'departamentos:list' %}">Listar</a>
         </div>
       </li>
-
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Documentos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'documentos:create' %}">Cadastrar</a>
+          <a class="dropdown-item" href="{% url 'documentos:list' %}">Listar</a>
+        </div>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Sair</a>

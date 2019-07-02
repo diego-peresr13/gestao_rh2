@@ -1,0 +1,13 @@
+{% extends 'base.html '%}
+
+{% block main %}
+
+<div class="jumbotron">
+    <h1>Lista de Departamentos: </h1>
+<ol>
+    {% for departamento in departamentos %}
+       <a href="{{ departamento.pk }}"><h2><li>{{ departamento.nome }}</li></h2></a>
+    {% endfor %}
+</ol>
+</div>
+{% endblock %}

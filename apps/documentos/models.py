@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from apps.funcionarios.models import Funcionario
 
 class Documento(models.Model):
@@ -7,3 +9,6 @@ class Documento(models.Model):
 
     def __str__(self):
         return self.descricao
+
+    def get_absolute_url(self):
+        return reverse('documentos:detail', kwargs={'pk': self.pk})
