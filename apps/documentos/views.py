@@ -8,6 +8,10 @@ class DocumentoListView(LoginRequiredMixin, ListView):
     context_object_name = 'documentos'
     model = models.Documento
 
+    def get_queryset(self):
+        funcionario = self.request.user.funcionario
+        return models.Documento.objects.filter(funcionario = funcionario)
+
 class DocumentoDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'documento_detail'
     model = models.Documento

@@ -8,6 +8,10 @@ class DepartamentoListView(LoginRequiredMixin, ListView):
     context_object_name = 'departamentos'
     model = models.Departamento
 
+    def get_queryset(self):
+        empresa_session = self.request.user.funcionario.empresa
+        return models.Departamento.objects.filter(empresa = empresa_session)
+
 class DepartamentoDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'departamento_detail'
     model = models.Departamento
