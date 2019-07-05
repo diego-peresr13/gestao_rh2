@@ -12,4 +12,4 @@ class Documento(models.Model):
         return self.descricao
 
     def get_absolute_url(self):
-        return reverse('documentos:detail', kwargs={'pk': self.pk})
+        return reverse('funcionarios:update', kwargs={'pk': self.funcionario.pk})

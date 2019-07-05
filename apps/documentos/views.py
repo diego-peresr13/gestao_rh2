@@ -19,14 +19,16 @@ class DocumentoDetailView(LoginRequiredMixin, DetailView):
 class DocumentoCreateView(LoginRequiredMixin, CreateView):
     model = models.Documento
     fields = ['descricao',
-              'arquivo',
-              'funcionario']
+              'arquivo']
 
-class DocumentoUpdateView(LoginRequiredMixin, UpdateView):
-    model = models.Documento
-    fields = ['descricao',
-              'arquivo',
-              'funcionario']
+    def form_valid(self, form):
+        ## apenas recupera os dados do FORM mas não salva no banco de dados
+        documento = form.save(commit=False)
+        documento.funcionario = self.request.user.funcionario
+        documento.save()
+        return super(DocumentoCreateView, self).form_valid(form)
+
+
 
 class DocumentoDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Documento

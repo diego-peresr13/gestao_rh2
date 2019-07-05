@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load bootstrap %}
 
 {% block main %}
 <div class="jumbotron">
 <form method="post">
     {% csrf_token %}
-     {{ form.as_table }}
+     {{ form|bootstrap }}
     <button class="btn btn-primary" type="submit">Login</button>
 </form>
     </div>
