@@ -5,7 +5,7 @@ from apps.funcionarios.models import Funcionario
 
 class Documento(models.Model):
     descricao = models.CharField(max_length=256)
-    arquivo = models.FileField(upload_to='documents/', null=True, blank=True)
+    arquivo = models.FileField(upload_to='documents/')
     funcionario = models.ForeignKey(Funcionario, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

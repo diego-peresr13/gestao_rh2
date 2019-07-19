@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block main %}
 <div class="jumbotron">
     <h1>Funcionario: {{ funcionario_detail.nome }}</h1>
@@ -10,23 +10,53 @@
 <a class="btn btn-warning" href="{% url 'funcionarios:delete' funcionario_detail.pk %}">Deletar</a>
 <br>
 <br>
-<a class="btn btn-info" href="{% url 'documentos:create' funcionario_detail.pk %}">Adicionar Documento</a>
-<br>
-<br>
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Relação de Documentos</th>
-        </tr>
-        </thead>
-        {% for documento in funcionario_detail.documento_set.all %}
-        <tbody>
-        <tr>
-            <td><a href="{{ documento.arquivo.url }}">{{ documento.descricao }}</a></td>
-        </tr>
-        </tbody>
-        {% endfor %}
-    </table>
+<div class="well">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container">
+                <a class="btn btn-info" href="{% url 'documentos:create' funcionario_detail.pk %}">Adicionar
+                    Documento</a>
+                <br>
+                <br>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Documentos" data-toggle="tab">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#horasExtras" data-toggle="tab">Horas Extras</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="tab-content">
+                <div class="container">
+                    <div role="tabpanel" class="tab-pane fade in active" id="Documentos">
+                        <table class="table table-striped table-sm table-bordered">
+                            <!--<thead>
+                                <tr>
+                                    <th scope="col">Relação de Documentos</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            -->
+                            {% for documento in funcionario_detail.documento_set.all %}
+                            <tbody>
+                                <tr>
+                                    <td><a href="{{ documento.arquivo.url }}">{{ documento.descricao }}</a></td>
+                                    <td align="center"><a href="{% url 'documentos:delete' documento.pk %}"><img
+                                                src="{% static 'ionic/delete.png' %}" width="20" height="20"></a></td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="horasExtras">
+                        bbb
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
