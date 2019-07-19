@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from apps.funcionarios.models import Funcionario
 
@@ -11,5 +11,5 @@ class Documento(models.Model):
     def __str__(self):
         return self.descricao
 
-    def get_absolute_url(self):
-        return reverse('funcionarios:update', kwargs={'pk': self.funcionario.pk})
+    def get_absolute_url(self):        
+        return reverse('funcionarios:detail', kwargs={'pk': self.funcionario.pk})

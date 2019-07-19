@@ -15,24 +15,4 @@
         <button class="btn btn-lg btn-primary" type="submit" value="Save">Salvar</button>
     </form>
 </div>
-<a class="btn btn-info" href="{% url 'documentos:create' %}">Adicionar Documento</a>
-<br>
-<br>
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Relação de Documentos</th>
-        </tr>
-        </thead>
-        {% for documento in object.documento_set.all %}
-        <tbody>
-        <tr>
-            <td><a href="{{ documento.arquivo.url }}">{{ documento.descricao }}</a></td>
-        </tr>
-        </tbody>
-
-        {% endfor %}
-    </table>
-</div>
 {% endblock %}

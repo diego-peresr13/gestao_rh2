@@ -1,11 +1,32 @@
 {% extends 'base.html' %}
 
 {% block main %}
-     <div class="jumbotron">
-         <h1>Funcionario: {{ funcionario_detail.nome }}</h1>
-         <h1>Empresa : {{ funcionario_detail.empresa }} </h1>
-         <h2>Departamento : {{ funcionario_detail.departamento }}</h2>
-     </div>
-      <a class="btn btn-primary" href="{% url 'funcionarios:update' funcionario_detail.pk %}">Editar</a>
-      <a class="btn btn-warning" href="{% url 'funcionarios:delete' funcionario_detail.pk %}">Deletar</a>
+<div class="jumbotron">
+    <h1>Funcionario: {{ funcionario_detail.nome }}</h1>
+    <h1>Empresa : {{ funcionario_detail.empresa }} </h1>
+    <h2>Departamento : {{ funcionario_detail.departamento }}</h2>
+</div>
+<a class="btn btn-primary" href="{% url 'funcionarios:update' funcionario_detail.pk %}">Editar</a>
+<a class="btn btn-warning" href="{% url 'funcionarios:delete' funcionario_detail.pk %}">Deletar</a>
+<br>
+<br>
+<a class="btn btn-info" href="{% url 'documentos:create' funcionario_detail.pk %}">Adicionar Documento</a>
+<br>
+<br>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Relação de Documentos</th>
+        </tr>
+        </thead>
+        {% for documento in funcionario_detail.documento_set.all %}
+        <tbody>
+        <tr>
+            <td><a href="{{ documento.arquivo.url }}">{{ documento.descricao }}</a></td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}
