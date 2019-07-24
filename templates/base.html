@@ -46,11 +46,20 @@
           <a class="dropdown-item" href="{% url 'funcionarios:create' %}">Cadastrar</a>
           <a class="dropdown-item" href="{% url 'funcionarios:list' %}">Listar</a>
         </div>
-      </li>
+      </li> 
     </ul>
+    <ul class="navbar-nav">
     <form class="form-inline my-2 my-lg-0">
-       <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Sair</a>
-    </form>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Bem-Vindo(a): {{usuario.funcionario.nome}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>             
+            </div>
+          </li>
+    </form>         
+  </ul>
   </div>
 </nav>
     {% block main %} {% endblock %}
