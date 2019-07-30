@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.funcionarios',
     'apps.documentos',
     'apps.registro_hora_extra',
+    'apps.corporate',
     'bootstrapform',
 ]
 

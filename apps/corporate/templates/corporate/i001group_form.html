@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block main %}
+<div class="jumbotron">
+
+    {% if form.instance.pk %}
+    <h1>Atualização de Grupos </h1>
+    {% else %}
+    <h1>Cadastro de Grupos</h1>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <button class="btn btn-lg btn-primary" type="submit" value="Save">Salvar</button>
+    </form>
+
+</div>
+{% endblock %}

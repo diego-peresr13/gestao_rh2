@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>Grupos Cadastrados</h3>
+        <br>
+        <br>
+        <a class="btn btn-info" href="{% url 'corporate:group-create' %}">Novo Grupo</a>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código do Grupo</th>
+                    <th>Descrição</th>     
+                    <th></th>                
+                </tr>
+            </thead>
+            {% for group in groups %}
+            <tbody>
+                <tr>
+                  <td><a href="{{ group.control }}">{{ group.cod_grupo }}</a></td>
+                  <td><a href="{{ group.control }}">{{ group.descricao }}</a></td>
+                  <td align="center"><a href="{% url 'corporate:delete_group' group.control %}"><img
+                    src="{% static 'ionic/delete.png' %}" width="20" height="20"></a></td>                  
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
