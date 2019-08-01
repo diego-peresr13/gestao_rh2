@@ -5,9 +5,9 @@
 <div class="jumbotron">
 
     {% if form.instance.pk %}
-    <h1>Atualização de Grupos </h1>
+    <h2>Atualização de Grupos </h1>
     {% else %}
-    <h1>Cadastro de Grupos</h1>
+    <h2>Cadastro de Grupos</h1>
     {% endif %}
     <form method="post">
         {% csrf_token %}

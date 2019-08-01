@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>Empresas Cadastradas</h3>
+        <br>
+        <br>
+        <a class="btn btn-info" href="{% url 'corporate:company-create' %}">Incluir Empresa</a>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:100px">Código</th>
+                    <th style="width:100px">Grupo</th>
+                    <th style="width:200px">Cnpj</th>
+                    <th style="width:300px">Razão Social</th>
+                    <th style="width:200px">Data Licença</th>                    
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for company in company_list %}
+            <tbody>
+                <tr>
+                    <td>{{ company.cod_empresa }}</td>
+                    <td>{{ company.grupo_corp }}</td>                    
+                    <td>{{ company.cnpj }}</td>
+                    <td>{{ company.razao_social }}</td>
+                    <td>{{ company.data_fim_licenca }}</td>                    
+                    <td align="center"><a href="{% url 'corporate:delete_company' company.slug %}"><img
+                                src="{% static 'ionic/deletar.png' %}" width="20" height="20" title="Deletar"></a></td>
+                    <td align="center"><a href="{% url 'corporate:company-update' company.slug %}"><img
+                                src="{% static 'ionic/editar.png' %}" width="20" height="20" title="Editar"></a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

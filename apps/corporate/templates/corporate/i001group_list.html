@@ -13,18 +13,21 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Código do Grupo</th>
-                    <th>Descrição</th>     
-                    <th></th>                
+                    <th style="width:150px">Código</th>
+                    <th style="width:550px">Descrição</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             {% for group in groups %}
             <tbody>
                 <tr>
-                  <td><a href="{{ group.control }}">{{ group.cod_grupo }}</a></td>
-                  <td><a href="{{ group.control }}">{{ group.descricao }}</a></td>
-                  <td align="center"><a href="{% url 'corporate:delete_group' group.control %}"><img
-                    src="{% static 'ionic/delete.png' %}" width="20" height="20"></a></td>                  
+                    <td>{{ group.cod_grupo }}</td>
+                    <td>{{ group.descricao }}</td>
+                    <td align="center"><a href="{% url 'corporate:delete_group' group.slug %}"><img
+                                src="{% static 'ionic/deletar.png' %}" width="20" height="20" title="Deletar"></a></td>
+                    <td align="center"><a href="{% url 'corporate:group-update' group.slug %}"><img
+                                src="{% static 'ionic/editar.png' %}" width="20" height="20" title="Editar"></a></td>
                 </tr>
             </tbody>
             {% endfor %}

@@ -5,7 +5,7 @@ from django.urls import reverse
 class I001Group(models.Model):
     cod_grupo = models.CharField(max_length=3)   
     descricao = models.CharField(max_length=255)
-    control   = models.CharField(max_length=255)
+    slug   = models.SlugField('Atalho')
 
     def __str__(self):
         return self.descricao
@@ -15,7 +15,7 @@ class I001Group(models.Model):
 
 class I002Company(models.Model):
     grupo_corp = models.ForeignKey(I001Group, related_name='empresas', on_delete=models.PROTECT)
-    control   = models.CharField(max_length=255)
+    slug   = models.SlugField('Atalho')
     cod_empresa = models.CharField(max_length=3)
     cnpj = models.CharField(max_length=14)
     razao_social = models.CharField(max_length=255)
@@ -27,10 +27,13 @@ class I002Company(models.Model):
     def __str__(self):
         return '%s: %s' % (self.cod_empresa, self.razao_social)
 
+    def get_absolute_url(self):
+        return reverse('corporate:company-list')
+
   
 class I003Branch(models.Model):
     empresa = models.ForeignKey(I002Company, related_name='filiais', on_delete=models.PROTECT)
-    control   = models.CharField(max_length=255)
+    slug   = models.SlugField('Atalho')
     cod_filial = models.CharField(max_length=6)
     razao_social = models.CharField(max_length=60)
     matriz_filial = models.CharField(max_length=1, blank=True, null=True)
