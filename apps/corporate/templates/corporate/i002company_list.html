@@ -10,9 +10,9 @@
         <a class="btn btn-info" href="{% url 'corporate:company-create' %}">Incluir Empresa</a>
         <br>
         <br>
-        <table class="table">
+        <table class="table" style="font-size:15px">
             <thead>
-                <tr>
+                <tr> 
                     <th style="width:100px">Código</th>
                     <th style="width:100px">Grupo</th>
                     <th style="width:200px">Cnpj</th>
@@ -24,7 +24,7 @@
             </thead>
             {% for company in company_list %}
             <tbody>
-                <tr>
+                <tr style="font-size:14px">
                     <td>{{ company.cod_empresa }}</td>
                     <td>{{ company.grupo_corp }}</td>                    
                     <td>{{ company.cnpj }}</td>

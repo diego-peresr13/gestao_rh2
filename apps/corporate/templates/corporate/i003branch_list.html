@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>Filiais Cadastradas</h3>
+        <br>
+        <br>
+        <a class="btn btn-info" href="{% url 'corporate:branch-create' %}">Incluir Filial</a>
+        <br>
+        <br>
+        <table class="table" style="font-size:13px; width:auto">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Empresa</th>
+                    <th>Cnpj</th>
+                    <th>Razão Social</th>                    
+                    <th>Inscrição Estadual</th>
+                    <th>Data Abertura</th>
+                    <th>Endereço</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for branch in branch_list %}
+            <tbody>
+                <tr style="font-size:12px">
+                    <td>{{ branch.cod_filial }}</td>
+                    <td>{{ branch.empresa }}</td>
+                    <td>{{ branch.cnpj }}</td>
+                    <td>{{ branch.razao_social }}</td>                    
+                    <td>{{ branch.inscr_estadual }}</td>
+                    <td>{{ branch.data_abertura }}</td>
+                    <td>{{ branch.endereco }}, {{ branch.num_endereco }} - {{ branch.cep }} - {{ branch.municipio }} /
+                        {{ branch.uf }}</td>
+                    <td align="center"><a href="{% url 'corporate:delete_branch' branch.slug %}"><img
+                                src="{% static 'ionic/deletar.png' %}" width="20" height="20" title="Deletar"></a></td>
+                    <td align="center"><a href="{% url 'corporate:branch-update' branch.slug %}"><img
+                                src="{% static 'ionic/editar.png' %}" width="20" height="20" title="Editar"></a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

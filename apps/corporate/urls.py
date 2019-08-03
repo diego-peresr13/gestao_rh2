@@ -10,5 +10,10 @@ urlpatterns = [
     path('empresas/', views.CompanyListView.as_view(), name='company-list'),    
     path('empresas/cadastrar/', views.CompanyCreateView.as_view(), name='company-create'),
     path('empresas/atualizar/<slug>', views.CompanyUpdateView.as_view(), name='company-update'),
-    path('empresas/deletar/<slug>', views.delete_company, name='delete_company'),    
+    path('empresas/deletar/<slug>', views.delete_company, name='delete_company'), 
+    path('filiais/', views.BranchListView.as_view(), name='branch-list'),    
+    path('filiais/cadastrar/', views.BranchCreateView.as_view(), name='branch-create'),
+    path('filiais/atualizar/<slug>', views.BranchUpdateView.as_view(), name='branch-update'),
+    path('filiais/deletar/<slug>', views.delete_branch, name='delete_branch'), 
+
 ]

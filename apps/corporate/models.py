@@ -8,7 +8,7 @@ class I001Group(models.Model):
     slug   = models.SlugField('Atalho')
 
     def __str__(self):
-        return self.descricao
+        return self.cod_grupo
 
     def get_absolute_url(self):
         return reverse('corporate:group-list')
@@ -24,8 +24,12 @@ class I002Company(models.Model):
     ativo = models.CharField(max_length=1, blank=True, null=True)
     qtde_filiais = models.BigIntegerField()
 
+    # def __str__(self):
+    #     return '%s: %s' % (self.cod_empresa, self.razao_social)
+
     def __str__(self):
-        return '%s: %s' % (self.cod_empresa, self.razao_social)
+        return self.cod_empresa
+
 
     def get_absolute_url(self):
         return reverse('corporate:company-list')
@@ -57,3 +61,6 @@ class I003Branch(models.Model):
 
     def __str__(self):
         return '%s: %s' % (self.cod_filial, self.razao_social)
+
+    def get_absolute_url(self):
+        return reverse('corporate:branch-list')

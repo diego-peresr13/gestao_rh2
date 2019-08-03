@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from . import models
 import uuid
 from django.shortcuts import render, redirect, get_object_or_404
@@ -83,9 +83,9 @@ class CompanyCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         ## apenas recupera os dados do FORM mas não salva no banco de dados
-        group = form.save(commit=False)
-        group.slug = slugify(uuid.uuid1())
-        group.save()
+        company = form.save(commit=False)
+        company.slug = slugify(uuid.uuid1())
+        company.save()
         return super(CompanyCreateView, self).form_valid(form)
 
 
@@ -117,3 +117,80 @@ def delete_company(request, slug):
     
     context = {"company": company}
     return render(request, template, context)
+
+# I003Branch
+class BranchListView(LoginRequiredMixin, ListView):
+    # template_name = 'group_list.html'
+    context_object_name = 'branch_list'
+    model = models.I003Branch
+
+
+class BranchDetailView(LoginRequiredMixin, DetailView):
+    context_object_name = 'branch_detail'
+    model = models.I003Branch
+
+class BranchCreateView(LoginRequiredMixin, CreateView):
+    # template_name = "group_form.html"
+    model = models.I003Branch
+    fields = ['cod_filial',
+              'empresa',
+              'cnpj',
+              'razao_social',
+              'cnae',
+              'inscr_estadual',
+              'data_abertura',
+              'cep',
+              'endereco',
+              'num_endereco',
+              'compl_endereco',
+              'bairro',
+              'uf',
+              'municipio',
+              'cod_municipio',
+               ]
+
+    def form_valid(self, form):
+        ## apenas recupera os dados do FORM mas não salva no banco de dados
+        branch = form.save(commit=False)
+        branch.slug = slugify(uuid.uuid1())
+        branch.save()
+        return super(BranchCreateView, self).form_valid(form)
+
+
+class BranchUpdateView(LoginRequiredMixin, UpdateView):
+    context_object_name = 'branch-update'
+    model = models.I003Branch
+    fields = ['cod_filial',
+              'empresa',
+              'cnpj',
+              'razao_social',
+              'cnae',
+              'inscr_estadual',
+              'data_abertura',
+              'cep',
+              'endereco',
+              'num_endereco',
+              'compl_endereco',
+              'bairro',
+              'uf',
+              'municipio',
+              'cod_municipio',
+               ]
+
+    def get_context_data(self, **kwargs):        
+        s = get_object_or_404(models.I003Branch, slug=self.kwargs['slug'])
+        context = super().get_context_data(**kwargs)
+        context['branch-update'] = s
+        return context
+
+
+def delete_branch(request, slug):
+    template = 'corporate/i003branch_confirm_delete.html'
+    branch = get_object_or_404(models.I003Branch, slug=slug)
+
+    if request.method == 'POST':
+        branch.delete()
+        return redirect('corporate:branch-list')
+    
+    context = {"branch": branch}
+    return render(request, template, context)    
