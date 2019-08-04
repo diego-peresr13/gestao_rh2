@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.registro_hora_extra',
     'apps.corporate',
     'bootstrapform',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,4 @@ LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

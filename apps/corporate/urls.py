@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'corporate'
-urlpatterns = [
+urlpatterns = [    
     path('grupos/', views.GroupListView.as_view(), name='group-list'),    
     path('grupos/cadastrar/', views.GroupCreateView.as_view(), name='group-create'),
     path('grupos/atualizar/<slug>', views.GroupUpdateView.as_view(), name='group-update'),
@@ -15,5 +15,5 @@ urlpatterns = [
     path('filiais/cadastrar/', views.BranchCreateView.as_view(), name='branch-create'),
     path('filiais/atualizar/<slug>', views.BranchUpdateView.as_view(), name='branch-update'),
     path('filiais/deletar/<slug>', views.delete_branch, name='delete_branch'), 
-
+    path('processo/', views.processoExec, name='processo'),
 ]

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block main %}
+<div class="jumbotron">
+
+    <h2>Execução de Processos</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <button class="btn btn-lg btn-primary" type="submit" value="Executar">Executar</button>
+    </form>
+
+</div>
+{% endblock %}

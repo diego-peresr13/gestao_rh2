@@ -7,6 +7,7 @@ from . import models
 import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaultfilters import slugify
+from . import forms
 
 # i001Group
 class GroupListView(LoginRequiredMixin, ListView):
@@ -194,3 +195,9 @@ def delete_branch(request, slug):
     
     context = {"branch": branch}
     return render(request, template, context)    
+
+
+def processoExec(request):
+    template = 'corporate/process_form.html'
+    form = forms.ProcessForm()
+    return render(request, template, {'form': form})
