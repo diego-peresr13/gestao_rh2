@@ -24,11 +24,11 @@ class I002Company(models.Model):
     ativo = models.CharField(max_length=1, blank=True, null=True)
     qtde_filiais = models.BigIntegerField()
 
-    # def __str__(self):
-    #     return '%s: %s' % (self.cod_empresa, self.razao_social)
-
     def __str__(self):
-        return self.cod_empresa
+        return '%s - %s' % (self.cod_empresa, self.razao_social)
+
+    # def __str__(self):
+    #     return self.cod_empresa
 
 
     def get_absolute_url(self):
@@ -36,7 +36,7 @@ class I002Company(models.Model):
 
   
 class I003Branch(models.Model):
-    empresa = models.ForeignKey(I002Company, related_name='filiais', on_delete=models.PROTECT)
+    empresa = models.ForeignKey(I002Company, on_delete=models.PROTECT)
     slug   = models.SlugField('Atalho')
     cod_filial = models.CharField(max_length=6)
     razao_social = models.CharField(max_length=60)

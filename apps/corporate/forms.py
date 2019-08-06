@@ -1,6 +1,7 @@
 from django import forms
 from .models import I002Company, I003Branch
 
+
 class ProcessForm(forms.Form):
     empresa = forms.ModelChoiceField(
         queryset=I002Company.objects.all(),  # pylint: disable=no-member
@@ -22,5 +23,11 @@ class ProcessForm(forms.Form):
         # )
     )
 
-    data_ini = forms.DateField(label=u"Data Inicial", input_formats='%d/%m/%Y', required=False, widget=forms.DateInput(format = '%d/%m/%Y'))
-    data_fim = forms.DateField(label=u"Data Final", input_formats='%d/%m/%Y', required=False, widget=forms.DateInput(format = '%d/%m/%Y'))
+    data_ini = forms.DateField(label=u"Data Inicial",
+                               widget=forms.DateInput(
+                                   format='%d/%m/%Y', attrs={'type': 'date'}),
+                               input_formats=('%d/%m/%Y', ))
+    data_fim = forms.DateField(label=u"Data Final",
+                               widget=forms.DateInput(
+                                   format='%d/%m/%Y', attrs={'type': 'date'}),
+                               input_formats=('%d/%m/%Y', ))

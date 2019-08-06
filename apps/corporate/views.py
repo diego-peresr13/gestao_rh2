@@ -8,6 +8,9 @@ import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaultfilters import slugify
 from . import forms
+from django.core import serializers
+from django.http import HttpResponse
+import json
 
 # i001Group
 class GroupListView(LoginRequiredMixin, ListView):
@@ -199,5 +202,12 @@ def delete_branch(request, slug):
 
 def processoExec(request):
     template = 'corporate/process_form.html'
-    form = forms.ProcessForm()
-    return render(request, template, {'form': form})
+    companies = models.I002Company.objects.all() # pylint: disable=no-member
+    return render(request, template, {'companies': companies})
+
+def FilterBranch(request):
+    companyId = request.GET['param'] 
+    company = get_object_or_404(models.I002Company, id=companyId)
+
+    qs_json = serializers.serialize('json', company.i003branch_set.all())
+    return HttpResponse(qs_json, content_type='application/json')

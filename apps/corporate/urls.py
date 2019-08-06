@@ -16,4 +16,5 @@ urlpatterns = [
     path('filiais/atualizar/<slug>', views.BranchUpdateView.as_view(), name='branch-update'),
     path('filiais/deletar/<slug>', views.delete_branch, name='delete_branch'), 
     path('processo/', views.processoExec, name='processo'),
+    path('processo/filterBranch/', views.FilterBranch, name='filterBranch'),
 ]
