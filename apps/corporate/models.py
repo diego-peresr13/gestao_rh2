@@ -1,11 +1,14 @@
 from django.db import models
+from django.db import connection
 from django.urls import reverse
 
 # Create your models here.
+
+
 class I001Group(models.Model):
-    cod_grupo = models.CharField(max_length=3)   
+    cod_grupo = models.CharField(max_length=3)
     descricao = models.CharField(max_length=255)
-    slug   = models.SlugField('Atalho')
+    slug = models.SlugField('Atalho')
 
     def __str__(self):
         return self.cod_grupo
@@ -13,9 +16,11 @@ class I001Group(models.Model):
     def get_absolute_url(self):
         return reverse('corporate:group-list')
 
+
 class I002Company(models.Model):
-    grupo_corp = models.ForeignKey(I001Group, related_name='empresas', on_delete=models.PROTECT)
-    slug   = models.SlugField('Atalho')
+    grupo_corp = models.ForeignKey(
+        I001Group, related_name='empresas', on_delete=models.PROTECT)
+    slug = models.SlugField('Atalho')
     cod_empresa = models.CharField(max_length=3)
     cnpj = models.CharField(max_length=14)
     razao_social = models.CharField(max_length=255)
@@ -30,14 +35,13 @@ class I002Company(models.Model):
     # def __str__(self):
     #     return self.cod_empresa
 
-
     def get_absolute_url(self):
         return reverse('corporate:company-list')
 
-  
+
 class I003Branch(models.Model):
     empresa = models.ForeignKey(I002Company, on_delete=models.PROTECT)
-    slug   = models.SlugField('Atalho')
+    slug = models.SlugField('Atalho')
     cod_filial = models.CharField(max_length=6)
     razao_social = models.CharField(max_length=60)
     matriz_filial = models.CharField(max_length=1, blank=True, null=True)
@@ -51,10 +55,10 @@ class I003Branch(models.Model):
     compl_endereco = models.CharField(max_length=60, blank=True, null=True)
     bairro = models.CharField(max_length=60, blank=True, null=True)
     uf = models.CharField(max_length=2, blank=True, null=True)
-    municipio =  models.CharField(max_length=50, blank=True, null=True)    
-    cod_municipio = models.CharField(max_length=12, blank=True, null=True)    
+    municipio = models.CharField(max_length=50, blank=True, null=True)
+    cod_municipio = models.CharField(max_length=12, blank=True, null=True)
     data_abertura = models.DateField(blank=True, null=True)
-    ativo = models.CharField(max_length=1)    
+    ativo = models.CharField(max_length=1)
 
     class Meta:
         unique_together = (('cod_filial', 'empresa'),)
@@ -64,3 +68,34 @@ class I003Branch(models.Model):
 
     def get_absolute_url(self):
         return reverse('corporate:branch-list')
+
+
+class I999Processo(models.Model):
+    slug = models.SlugField('Atalho')
+    cod_empresa = models.CharField(max_length=3)
+    cod_filial = models.CharField(max_length=6)
+    data_ini = models.DateField()
+    data_fim = models.DateField()
+    creation_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.slug
+
+    def get_absolute_url(self):
+        return reverse('corporate:group-list')
+
+
+class I900Processo(models.Model):
+    slug = models.SlugField('Atalho')
+    cod_empresa = models.CharField(max_length=3)
+    cod_filial = models.CharField(max_length=6)
+    data_ini = models.DateField()
+    data_fim = models.DateField()
+    creation_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.slug
+
+    def get_absolute_url(self):
+        return reverse('corporate:group-list')
+        

@@ -17,4 +17,6 @@ urlpatterns = [
     path('filiais/deletar/<slug>', views.delete_branch, name='delete_branch'), 
     path('processo/', views.processoExec, name='processo'),
     path('processo/filterBranch/', views.FilterBranch, name='filterBranch'),
+    path('processo/CallProcessoExec/', views.CallProcessoExec, name='CallProcessoExec'),
+    path('processos/', views.ProcessoListView.as_view(), name='processos'),
 ]

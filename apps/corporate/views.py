@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from . import models
+from django.db import connection
 import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaultfilters import slugify
@@ -11,8 +12,11 @@ from . import forms
 from django.core import serializers
 from django.http import HttpResponse
 import json
+from django import forms
 
 # i001Group
+
+
 class GroupListView(LoginRequiredMixin, ListView):
     # template_name = 'group_list.html'
     context_object_name = 'groups'
@@ -23,15 +27,15 @@ class GroupDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'group_detail'
     model = models.I001Group
 
+
 class GroupCreateView(LoginRequiredMixin, CreateView):
     # template_name = "group_form.html"
     model = models.I001Group
     fields = ['cod_grupo',
               'descricao']
 
-    
     def form_valid(self, form):
-        ## apenas recupera os dados do FORM mas não salva no banco de dados
+        # apenas recupera os dados do FORM mas não salva no banco de dados
         group = form.save(commit=False)
         group.slug = slugify(uuid.uuid1())
         group.save()
@@ -59,11 +63,13 @@ def delete_group(request, slug):
     if request.method == 'POST':
         group.delete()
         return redirect('corporate:group-list')
-    
+
     context = {"group": group}
     return render(request, template, context)
 
 # i002Company
+
+
 class CompanyListView(LoginRequiredMixin, ListView):
     # template_name = 'group_list.html'
     context_object_name = 'company_list'
@@ -74,6 +80,7 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'company_detail'
     model = models.I002Company
 
+
 class CompanyCreateView(LoginRequiredMixin, CreateView):
     # template_name = "group_form.html"
     model = models.I002Company
@@ -83,10 +90,10 @@ class CompanyCreateView(LoginRequiredMixin, CreateView):
               'razao_social',
               'data_fim_licenca',
               'ativo',
-              'qtde_filiais',]
-    
+              'qtde_filiais', ]
+
     def form_valid(self, form):
-        ## apenas recupera os dados do FORM mas não salva no banco de dados
+        # apenas recupera os dados do FORM mas não salva no banco de dados
         company = form.save(commit=False)
         company.slug = slugify(uuid.uuid1())
         company.save()
@@ -102,9 +109,9 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
               'razao_social',
               'data_fim_licenca',
               'ativo',
-              'qtde_filiais',]
+              'qtde_filiais', ]
 
-    def get_context_data(self, **kwargs):        
+    def get_context_data(self, **kwargs):
         s = get_object_or_404(models.I002Company, slug=self.kwargs['slug'])
         context = super().get_context_data(**kwargs)
         context['company-update'] = s
@@ -118,11 +125,13 @@ def delete_company(request, slug):
     if request.method == 'POST':
         company.delete()
         return redirect('corporate:company-list')
-    
+
     context = {"company": company}
     return render(request, template, context)
 
 # I003Branch
+
+
 class BranchListView(LoginRequiredMixin, ListView):
     # template_name = 'group_list.html'
     context_object_name = 'branch_list'
@@ -132,6 +141,7 @@ class BranchListView(LoginRequiredMixin, ListView):
 class BranchDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'branch_detail'
     model = models.I003Branch
+
 
 class BranchCreateView(LoginRequiredMixin, CreateView):
     # template_name = "group_form.html"
@@ -151,10 +161,10 @@ class BranchCreateView(LoginRequiredMixin, CreateView):
               'uf',
               'municipio',
               'cod_municipio',
-               ]
+              ]
 
     def form_valid(self, form):
-        ## apenas recupera os dados do FORM mas não salva no banco de dados
+        # apenas recupera os dados do FORM mas não salva no banco de dados
         branch = form.save(commit=False)
         branch.slug = slugify(uuid.uuid1())
         branch.save()
@@ -179,9 +189,9 @@ class BranchUpdateView(LoginRequiredMixin, UpdateView):
               'uf',
               'municipio',
               'cod_municipio',
-               ]
+              ]
 
-    def get_context_data(self, **kwargs):        
+    def get_context_data(self, **kwargs):
         s = get_object_or_404(models.I003Branch, slug=self.kwargs['slug'])
         context = super().get_context_data(**kwargs)
         context['branch-update'] = s
@@ -195,19 +205,52 @@ def delete_branch(request, slug):
     if request.method == 'POST':
         branch.delete()
         return redirect('corporate:branch-list')
-    
+
     context = {"branch": branch}
-    return render(request, template, context)    
+    return render(request, template, context)
 
 
 def processoExec(request):
     template = 'corporate/process_form.html'
-    companies = models.I002Company.objects.all() # pylint: disable=no-member
+    companies = models.I002Company.objects.all()  # pylint: disable=no-member
     return render(request, template, {'companies': companies})
 
+
 def FilterBranch(request):
-    companyId = request.GET['param'] 
+    companyId = request.GET['param']
     company = get_object_or_404(models.I002Company, id=companyId)
 
     qs_json = serializers.serialize('json', company.i003branch_set.all())
     return HttpResponse(qs_json, content_type='application/json')
+
+
+def CallProcessoExec(request):
+    if request.is_ajax() and request.POST:
+        # template = 'corporate/i900processo_list.html'
+        # template = 'corporate:processos'
+        NumProc = slugify(uuid.uuid1())
+        CodEmpresa = request.POST['Company']
+        CodFilial = request.POST['Branch']
+        DataIni = request.POST['BeginDate']
+        DataFim = request.POST['EndDate']
+        cursor = connection.cursor()
+    # calls PROCEDURE named LOG_MESSAGE which resides in MY_UTIL Package
+        cursor.callproc(
+            "PRC_iLOG", (CodEmpresa,
+                         CodFilial,
+                         NumProc,
+                         DataIni,
+                        DataFim))
+    # cursor.callproc("PRC_iLOG2",)
+        cursor.close()
+    
+    pr = serializers.serialize('json', models.I900Processo.objects.all())   # pylint: disable=no-member   
+    # return render(request, template, {'processos': processos})
+    return HttpResponse(pr, content_type='application/json')
+    # return redirect(template, {'processos': processos}), 
+    # return redirect('corporate:processos')
+
+
+class ProcessoListView(LoginRequiredMixin, ListView):
+    context_object_name = 'processo_list'
+    model = models.I900Processo

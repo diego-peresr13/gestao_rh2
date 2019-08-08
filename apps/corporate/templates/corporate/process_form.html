@@ -5,27 +5,43 @@
 <div class="jumbotron">
 
     <h2>Execução de Processos</h1>
-        <form method="GET">
-            <select class="custom-select" name="companies" id="companies" onchange="filterBranch()">
-                <option disabled selected="selected">Selecione um empresa</option>
+        <form id="FormProc" method="POST">
+            {% csrf_token %}
+            <label class="control-label" for="companies">Empresa</label>
+            <select required="True" class="custom-select" name="companies" id="companies" onchange="filterBranch()" required>
+                <option disabled selected="selected" required>Selecione um empresa</option>
                 {% for company in companies %}
                 <option value="{{ company.id }}">{{ company }}</option>
                 {% endfor %}
             </select>
-
-             <br>
-             <br>
-
-            <select  class="custom-select" name="branches" id="branches">
-                    <option disabled selected="selected"> ----------- </option>
+            <br>
+            <br>
+            <label class="control-label" for="branches">Filial</label>
+            <select class="custom-select" name="branches" id="branches" required>
+                <option disabled selected="selected" required> ----------- </option>
             </select>
             <br>
             <br>
+            <label class="control-label" for="dataIni">Data Inicial</label>
+            <input class="form-control" type="date" name="dataIni" id="dataIni" required>
+            <br>
+            <label class="control-label" for="dataFim">Data Final</label>
+            <input class="form-control" type="date" name="dataFim" id="dataFim" required>
+            <br>
+            <br>
+            <!-- <input class="btn btn-lg btn-primary" type="button" onclick=""> -->
+            <input type="hidden" id="Url" data-url="{% url 'corporate:processos' %}">
+            <button class="btn btn-lg btn-primary" type="submit" onclick="CallProcessoExec()" value="Save">Executar</button>            
 
-            <button class="btn btn-lg btn-primary" type="submit" value="Executar">Executar</button>
+            
         </form>
-
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{% url 'corporate:processos' %}">Processos</a>
+        
 </div>
+<br>
+<br>
 <p id="message"></p>
 {% endblock %}
 

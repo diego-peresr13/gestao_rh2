@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3>Processos Executados</h3>
+        <br>
+        <br>
+        <a class="btn btn-info" href="{% url 'corporate:processo' %}">Executar Novo Processo</a>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:150px">Control</th>
+                    <th style="width:550px">Data De execução</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for processo in processo_list %}
+            <tbody>
+                <tr>
+                    <td>{{ processo.slug }}</td>
+                    <td>{{ processo.creation_date }}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
